@@ -34,11 +34,16 @@ work on a line
 work on the tree
     branch     List, create, or delete branches
         branch  //查看当前分支
+        branch -d dev  //删除已合并分支
+        branch -D dev  //删除分支
 
     checkout   Switch branches or restore working tree files
         git checkout -b dev
         /*等价于 git branch dev
                 git checkout dev*/
+    
+    merge
+        git merge dev
         
 
         
