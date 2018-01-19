@@ -10,7 +10,14 @@ start a working area (see also: git help tutorial)
 
 work on a line 
     add        Add file contents to the index
+        git add readme.txt
+        git add -A  //add all files
     commit     Record changes to the repository
+        git commit -m "wrote a readme file"
+    
+    reset      Reset current HEAD to the specified state
+        git reset --hard commit_id
+        git reset --hard HEAD^
 
 
 work on the tree
@@ -19,9 +26,30 @@ work on the tree
 
 
 check staus
-    log        Show commit logs
-    show       Show various types of objects
     status     Show the working tree status
+    log        Show commit logs
+        git log --pretty=oneline
+    show       Show various types of objects
+    
+
+
+
+
+
+
+
+understand
+
+    line 
+        current
+        added
+        commit
+
+    tree
+        master//主分支，默认分支
+
+
+
 
 
 
