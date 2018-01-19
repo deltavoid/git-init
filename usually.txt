@@ -33,7 +33,13 @@ work on a line
 
 work on the tree
     branch     List, create, or delete branches
+        branch  //查看当前分支
+
     checkout   Switch branches or restore working tree files
+        git checkout -b dev
+        /*等价于 git branch dev
+                git checkout dev*/
+        
 
         
 
@@ -78,7 +84,7 @@ understand
         added    //暂存区
         commit   //版本库
 
-    tree
+    tree  版本树：每个节点指向它的前驱节点
         master//主分支，默认分支
 
 
