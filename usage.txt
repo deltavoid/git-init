@@ -1,0 +1,149 @@
+
+
+git 常用命令
+
+ref: https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000
+
+
+git config --global user.name "Your Name"
+git config --global user.email "email@example.com"
+
+
+start a working area (see also: git help tutorial)
+    clone      Clone a repository into a new directory
+    init       Create an empty Git repository or reinitialize an existing one
+
+work on a line 
+    add        Add file contents to the index
+        git add readme.txt
+        git add -A  //add all files
+    commit     Record changes to the repository
+        git commit -m "wrote a readme file"
+        git commit -a -m "message"  //提交所有已修改的文件，如有未跟踪文件，需首先add
+    
+    reset      Reset current HEAD to the specified state
+        git reset --hard commit_id
+        git reset --hard HEAD^
+    
+    checkout
+        git checkout -- readme.txt  //撤销修改，恢复到最近一次暂存区或commit的状态  
+
+    撤销修改
+        场景1：当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，用命令git checkout -- file。
+        场景2：当你不但改乱了工作区某个文件的内容，还添加到了暂存区时，想丢弃修改，分两步，第一步用命令git reset HEAD file，就回到了场景1，第二步按场景1操作。
+        场景3：已经提交了不合适的修改到版本库时，想要撤销本次提交，参考版本回退一节，不过前提是没有推送到远程库。
+    
+        git checkout其实是用版本库里的版本替换工作区的版本，无论工作区是修改还是删除，都可以“一键还原”。
+        命令git rm用于删除一个文件。如果一个文件已经被提交到版本库，那么你永远不用担心误删，但是要小心，你只能恢复文件到最新版本，你会丢失最近一次提交后你修改的内容。
+
+    恢复
+
+        git checkout -- <file>
+            撤销工作区的修改，将工作区回退到暂存区
+        
+        git reset HEAD <file>
+            撤销暂存区的修改，将暂存区回退到最近一个commit的状态
+
+        git reset --hard HEAD^
+            回退到上一个版本(commit)
+
+
+    临时保存
+        git stash  //保存工作现场
+        git stash list  //查看工作现场记录
+        git stash pop   //恢复最近的工作现场
+            等价于  git stash apply 
+                   git stash drop 
+
+
+work on the tree
+    branch     List, create, or delete branches
+        branch  //查看当前分支
+        branch -d dev  //删除已合并分支
+        branch -D dev  //强行删除分支
+
+    checkout   Switch branches or restore working tree files
+        git checkout -b dev
+        /*等价于 git branch dev
+                git checkout dev*/
+    
+    merge
+        git merge dev
+        git merge --no-ff -m "message" dev
+        
+
+check staus
+    status     Show the working tree status
+    log        Show commit logs
+        git log --pretty=oneline
+        git log --graph --pretty=oneline --abbrev-commit
+
+    show       Show various types of objects
+
+
+
+remote repository
+    ssh-keygen -t rsa -C "youremail@example.com"
+
+    git clone git@github.com:michaelliao/gitskills.git
+
+    git remote //查看远程库信息
+    git remote -v//查看远程库详细信息
+    git remote add origin git@github.com:michaelliao/learngit.git
+
+    git push -u origin master
+    git push origin master
+        //把本地库的内容推送到远程，用git push命令，实际上是把当前分支master推送到远程。-u用于第一次。
+
+    git checkout -b dev origin/dev
+        创建远程origin的dev分支到本地
+
+    git branch --set-upstream branch-name origin/branch-name
+        创建本地分支和远程分支的链接关系
+
+collaborate (see also: git help workflows)
+   fetch      Download objects and refs from another repository
+   pull       Fetch from and integrate with another repository or a local branch
+   push       Update remote refs along with associated objects
+
+
+多人合作
+    因此，多人协作的工作模式通常是这样：
+    首先，可以试图用git push origin branch-name推送自己的修改；
+    如果推送失败，则因为远程分支比你的本地更新，需要先用git pull试图合并；
+    如果合并有冲突，则解决冲突，并在本地提交；
+    没有冲突或者解决掉冲突后，再用git push origin branch-name推送就能成功！
+    如果git pull提示“no tracking information”，则说明本地分支和远程分支的链接关系没有创建，用命令git branch --set-upstream branch-name origin/branch-name。
+    这就是多人协作的工作模式，一旦熟悉了，就非常简单。
+
+    小结
+    查看远程库信息，使用git remote -v；
+    本地新建的分支如果不推送到远程，对其他人就是不可见的；
+    从本地推送分支，使用git push origin branch-name，如果推送失败，先用git pull抓取远程的新提交；
+    在本地创建和远程分支对应的分支，使用git checkout -b branch-name origin/branch-name，本地和远程分支的名称最好一致；
+    建立本地分支和远程分支的关联，使用git branch --set-upstream branch-name origin/branch-name；
+    从远程抓取分支，使用git pull，如果有冲突，要先处理冲突。
+
+
+
+understand
+
+    line 
+        current  //工作区
+        added    //暂存区
+        commit   //版本库
+
+    tree  版本树：每个节点指向它的前驱节点
+        master//主分支，默认分支
+
+        所谓分支就是从某个commit延伸出来的可能的前进方向
+
+    版本库
+        origin//远程库
+
+        本地库关联到远程库，并建立分支的对应关系，通常是主分支
+
+
+
+
+
